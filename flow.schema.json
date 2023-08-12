@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/Flow",
+  "$defs": {
+    "API": {
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "get",
+            "post",
+            "put",
+            "patch",
+            "delete"
+          ]
+        },
+        "route": {
+          "type": "string"
+        },
+        "queryParams": {
+          "patternProperties": {
+            ".*": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "body": {
+          "type": "object"
+        },
+        "statusCode": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "method",
+        "route",
+        "queryParams",
+        "body",
+        "statusCode"
+      ]
+    },
+    "Flow": {
+      "properties": {
+        "precondition": {
+          "$ref": "#/$defs/Precondition"
+        },
+        "integration": {
+          "$ref": "#/$defs/Integration"
+        },
+        "postcondition": {
+          "$ref": "#/$defs/PostCondition"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "precondition",
+        "integration",
+        "postcondition"
+      ]
+    },
+    "Integration": {
+      "properties": {
+        "bearerToken": {
+          "type": "string"
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "get",
+            "post",
+            "put",
+            "patch",
+            "delete"
+          ]
+        },
+        "route": {
+          "type": "string"
+        },
+        "queryParams": {
+          "patternProperties": {
+            ".*": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "body": {
+          "type": "object"
+        },
+        "statusCode": {
+          "type": "integer"
+        },
+        "prefix": {
+          "type": "string"
+        },
+        "level": {
+          "type": "string",
+          "enum": [
+            "warn",
+            "error"
+          ]
+        },
+        "matchKeyValue": {
+          "type": "object"
+        },
+        "matchKeyExists": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "bearerToken",
+        "method",
+        "route",
+        "queryParams",
+        "body",
+        "statusCode",
+        "prefix",
+        "level",
+        "matchKeyValue",
+        "matchKeyExists"
+      ]
+    },
+    "PostCondition": {
+      "properties": {
+        "bearerToken": {
+          "type": "string"
+        },
+        "steps": {
+          "items": {
+            "$ref": "#/$defs/API"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "bearerToken",
+        "steps"
+      ]
+    },
+    "PreConditionStep": {
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "get",
+            "post",
+            "put",
+            "patch",
+            "delete"
+          ]
+        },
+        "route": {
+          "type": "string"
+        },
+        "queryParams": {
+          "patternProperties": {
+            ".*": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
+        "body": {
+          "type": "object"
+        },
+        "statusCode": {
+          "type": "integer"
+        },
+        "saveKeys": {
+          "patternProperties": {
+            ".*": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "method",
+        "route",
+        "queryParams",
+        "body",
+        "statusCode",
+        "saveKeys"
+      ]
+    },
+    "Precondition": {
+      "properties": {
+        "baseUrl": {
+          "type": "string"
+        },
+        "bearerToken": {
+          "type": "string"
+        },
+        "steps": {
+          "items": {
+            "$ref": "#/$defs/PreConditionStep"
+          },
+          "type": "array"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "baseUrl",
+        "bearerToken",
+        "steps"
+      ]
+    }
+  }
+}
